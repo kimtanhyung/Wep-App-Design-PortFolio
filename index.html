@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="탄형이의 웹디자인 & 웹 퍼블리싱 포트폴리오입니다.">
+
+  <title>탄형이의 | Web Design &amp; Publisher </title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <link rel="stylesheet" href="css/main.css">
+  <meta content="김탄형 웹 디자이너&middot;웹퍼블리셔 포트폴리오, 웹&middot;앱 프로젝트와 그래픽 디자인 작업물" name="description">
+  <script src="lib/jquery-3.7.1.min.js"></script>
+  <script src="lib/swiper-bundle.min.js"></script>
+
+</head>
+
+<script>
+
+
+  $(function () {
+
+    const $menuLinks = $('.header .gnb a[href^="#"]');
+
+    function updateScroll() {
+
+      const scrollTop = $(window).scrollTop();
+      const docHeight = $(document).height() - $(window).height();
+
+      // 스크롤 진행률
+      const progress = docHeight > 0
+        ? (scrollTop / docHeight) * 100
+        : 0;
+
+      $('.reading-progress').css('width', progress + '%');
+
+      // 헤더 배경 변경
+      $('.header').toggleClass('scrolled', scrollTop > 50);
+
+      // 메뉴 활성화
+      const scrollPosition = scrollTop + 120;
+      let activeId = 'about';
+
+      $menuLinks.each(function () {
+
+        const targetId = $(this).attr('href');
+        const $section = $(targetId);
+
+        if ($section.length &&
+          scrollPosition >= $section.offset().top) {
+
+          activeId = targetId.substring(1);
+        }
+
+      });
+
+      $menuLinks.removeClass('active');
+
+      $menuLinks
+        .filter('[href="#' + activeId + '"]')
+        .addClass('active');
+
+    }
+
+    $(window).on('scroll', updateScroll);
+
+    updateScroll();
+
+    // SKILLS 화살표 클릭 시 설명 열기 / 닫기
+    $('.skill-card .skill-plus').on('click', function () {
+
+      const $button = $(this);
+      const $card = $button.closest('.skill-card');
+
+      $card.toggleClass('is-open');
+
+      const isOpen = $card.hasClass('is-open');
+
+      $button.attr('aria-expanded', isOpen);
+      $button.attr(
+        'aria-label',
+        isOpen ? '스킬 설명 접기' : '스킬 설명 펼치기'
+      );
+
+    });
+
+    function updateScrollToggle() {
+
+      if (isAnimating) return;
+
+      const scrollTop = $(window).scrollTop();
+      const maxScroll = $(document).height() - $(window).height();
+
+      // 맨 아래에 도착하면 위쪽 화살표
+      if (maxScroll > 0 && scrollTop >= maxScroll - 5) {
+
+        $scrollToggle
+          .text('↑')
+          .attr('aria-label', '맨 위로 이동');
+
+      } else {
+
+        $scrollToggle
+          .text('↓')
+          .attr('aria-label', '맨 아래로 이동');
+
+      }
+    }
+
+    const $scrollToggle = $('.scroll-toggle');
+
+    let isAnimating = false;
+
+    // 화살표 클릭
+    $scrollToggle.on('click', function () {
+
+      // 이동 중에는 중복 클릭 방지
+      if (isAnimating) return;
+
+      isAnimating = true;
+
+      const isDown = $scrollToggle.text().trim() === '↓';
+
+      const target = isDown
+        ? $(document).height() - $(window).height()
+        : 0;
+
+      $('html, body').stop().animate(
+        { scrollTop: target },
+        {
+          duration: 1500,
+          easing: 'swing',
+
+          complete: function () {
+
+            // html과 body 애니메이션 완료 후 실행
+            if (this !== document.body) return;
+
+            isAnimating = false;
+            updateScrollToggle();
+
+          }
+        }
+      );
+
+    });
+
+    // 스크롤 위치 확인
+    $(window).on('scroll', updateScrollToggle);
+
+    // 최초 실행
+    updateScrollToggle();
+
+    $('.menu-toggle').on('click', function () {
+      const isOpen = $(this).toggleClass('is-open')
+        .hasClass('is-open');
+
+      $('.header .nav').toggleClass('is-open', isOpen);
+
+      $(this).attr('aria-expanded', isOpen);
+      $(this).attr(
+        'aria-label',
+        isOpen ? '메뉴 닫기' : '메뉴 열기'
+      );
+    });
+
+    // 메뉴 항목 클릭하면 자동 닫기
+    $('.header .gnb a').on('click', function () {
+      $('.menu-toggle').removeClass('is-open')
+        .attr('aria-expanded', false)
+        .attr('aria-label', '메뉴 열기');
+
+      $('.header .nav').removeClass('is-open');
+    });
+
+    $('.main .hero-inner .pill-link, .main .hero-inner a[href="#skills"]')
+      .on('click', function (e) {
+
+        const isArrow = $(e.target).is(
+          '.scroll-arrow, .pill-link > span:not(.btn-text)'
+        );
+
+        if (!isArrow) {
+          e.preventDefault();
+        }
+
+      });
+
+    const $clickCursor = $('.click-cursor');
+
+    const $arrows = $(
+      '.main .hero-inner .pill-link > span:not(.btn-text), ' +
+      '.main .hero-inner a[href="#skills"] .scroll-arrow, ' +
+      '.skill-card .skill-plus'
+    );
+
+    $arrows.on('mouseenter', function () {
+      $clickCursor.addClass('is-active');
+    });
+
+    $arrows.on('mousemove', function (e) {
+      $clickCursor.css({
+        left: e.clientX + 'px',
+        top: e.clientY + 'px'
+      });
+    });
+
+    $arrows.on('mouseleave', function () {
+      $clickCursor.removeClass('is-active');
+    });
+
+
+    $(window).on('scroll', function () {
+
+      const scrollTop = $(window).scrollTop();
+      const projectsTop = $('#projects').offset().top;
+
+      if (scrollTop + 150 >= projectsTop) {
+
+        $('.skill-card.is-open').removeClass('is-open');
+
+        $('.skill-card .skill-plus')
+          .attr('aria-expanded', 'false')
+          .attr('aria-label', '스킬 설명 펼치기');
+      }
+
+    });
+
+    /* SKILLS 영역 위아래 일정 거리 벗어나면 초기화 */
+    $(window).on('scroll', function () {
+
+      const scrollTop = $(window).scrollTop();
+
+      const skillsTop = $('#skills').offset().top;
+      const projectsTop = $('#projects').offset().top;
+
+      // 위쪽 초기화 지점
+      const resetUp = skillsTop - 300;
+
+      // 아래쪽 초기화 지점
+      const resetDown = projectsTop - 150;
+
+      // 위쪽 또는 아래쪽 경계를 벗어나면 초기화
+      if (scrollTop <= resetUp || scrollTop >= resetDown) {
+
+        $('.skill-card.is-open').removeClass('is-open');
+
+        $('.skill-card .skill-plus')
+          .attr('aria-expanded', 'false')
+          .attr('aria-label', '스킬 설명 펼치기');
+
+      }
+
+    });
+
+  });
+
+</script>
+
+
+<body>
+
+  <div class="click-cursor" aria-hidden="true">
+    CLICK
+  </div><!-- .click-cursor -->
+
+  <div aria-hidden="true" class="reading-progress">
+  </div><!-- .reading-progress end -->
+
+  <div id="wrap">
+    <header class="header" id="site-header">
+      <div class="inner">
+        <h1 class="logo">
+          <a href="#home" aria-label="HOME으로 이동">
+            <span class="logo-mark">
+              KH<span class="logo-dot">.</span>
+            </span>
+          </a>
+        </h1><!-- .logo end -->
+
+        <button aria-controls="main-menu" aria-expanded="false" aria-label="메뉴 열기" class="menu-toggle" type="button">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav aria-label="주 메뉴" class="nav" id="main-menu">
+
+          <ul class="gnb">
+            <li>
+              <a href="#about" class="active">ABOUT</a>
+            </li>
+
+            <li>
+              <a href="#skills">SKILLS</a>
+            </li>
+
+            <li>
+              <a href="#projects">PROJECTS</a>
+            </li>
+
+            <li>
+              <a href="#design">DESIGN</a>
+            </li>
+
+            <li>
+              <a href="#contact">CONTACT</a>
+            </li>
+          </ul><!-- .gnb end -->
+
+        </nav><!-- .nav end -->
+
+
+      </div><!-- .inner end -->
+    </header><!-- .header end -->
+
+    <main class="main">
+
+      <section class="hero" id="home">
+        <div class="hero-glow">
+        </div><!-- .hero-glow end -->
+
+        <div class="hero-bg-text" aria-hidden="true">
+          PORTFOLIO
+        </div>
+
+        <div class="hero-inner">
+          <img alt="" aria-hidden="true" class="hero-watermark" src="img/logo/logo.png">
+          <div class="eyebrow">
+            <span class="eyebrow-line">
+            </span><!-- .eyebrow-line end -->
+            WEB DESING &amp; WEBPUBLISHER
+          </div><!-- .eyebrow end -->
+          <p class="hello-jump" aria-label="HELLO, I'M">
+            <span style="--i:0">H</span>
+            <span style="--i:1">E</span>
+            <span style="--i:2">L</span>
+            <span style="--i:3">L</span>
+            <span style="--i:4">O</span>
+            <span style="--i:5">,</span>
+            <span class="hello-space" aria-hidden="true"></span>
+            <span style="--i:6">I</span>
+            <span style="--i:7">'</span>
+            <span style="--i:8">M</span>
+          </p>
+          <h2>KIM TAN
+            <br /><em>HYOUNG.</em>
+          </h2>
+
+          <a class="pill-link" href="#about">
+            <span class="btn-text">ABOUT</span>
+            <span>&rarr;</span>
+          </a>
+
+          <a aria-label="SKILLS로 이동" href="#skills">
+            <span class="btn-text">SCROLL TO EXPLORE</span>
+            <span class="scroll-arrow">&rarr;</span>
+          </a>
+        </div><!-- .hero-inner end -->
+
+      </section><!-- .hero end -->
+
+      <section class="section about-section" id="about">
+        <div class="inner">
+          <div class="section-heading">
+            <span class="num">
+              01 / ABOUT
+            </span><!-- .unm end -->
+            <h2>
+              WHO
+              <em>AM I?</em>
+            </h2>
+          </div><!-- .section-heading end -->
+
+          <div class="about-grid">
+            <div class="about-lead">
+              <span class="mini-label">
+                INTRODUCING MYSELF
+              </span>
+              <h3>
+                작은 디테일이 모여 하나의 <br />완성도를 만든다고 믿습니다.
+              </h3><br />
+
+              <p>새로운 시각과 꾸준한 배움으로
+                <br />감각적인 디자인 설계를 고민하고,
+                <br />구현하며 발생하는 문제점을 파악하여
+                <br />더 나은 웹 경험을 만들어가는 웹 디자이너 & 웹 퍼블리셔 전문가로 성장해 나가겠습니다.
+              </p>
+
+            </div><!-- .about-lead end -->
+
+            <div class="about-info">
+              <div class="info-block education-block">
+                <h4>EDUCATION</h4>
+
+                <div class="info-row">
+                  <strong>부산경상대학교</strong>
+                  <span class="info-desc">멀티미디어 디자인 전공</span>
+                  <span class="info-date">2015.03 – 2017.02</span>
+                </div><!-- .info-row end -->
+
+                <div class="info-row">
+                  <strong>그린컴퓨터아카데미</strong>
+                  <span class="info-desc">UX/UI 반응형 웹 · 웹퍼블리셔 과정</span>
+                  <span class="info-date">2025.01 – 2025.06</span>
+                </div><!-- .info-row end -->
+
+
+              </div><!-- .info-block education-block end -->
+
+              <div class="info-block">
+                <h4>EXPERIENCE</h4>
+
+                <div class="info-row">
+                  <strong>(주)착한사람들</strong>
+                  <span class="info-desc">홍보물 및 시각디자인 · PPT제작</span>
+                  <span class="info-date">2025.10.9 – 2026.10.9</span>
+                </div><!-- .info-row end -->
+
+                <div class="info-row">
+                  <strong>부산경상대학교 산학연계 인턴</strong>
+                  <span class="info-desc">PPT 및 웹 홈페이지 제작</span>
+                  <span class="info-date">2015.03 – 2016.02</span>
+                </div><!-- .info-row end -->
+
+                <div class="info-row">
+                  <strong>(주)픽스</strong>
+                  <span class="info-desc">웹 홈페이지 제작 · 코딩</span>
+                  <span class="info-date">2016.12 – 2017.01</span>
+                </div><!-- .info-row end -->
+
+              </div><!-- .info-block end -->
+
+              <div class="info-block">
+                <h4>LICENSE &amp; AWARD</h4>
+
+                <div class="info-row">
+                  <strong>GTQ 그래픽기술자격 2급</strong>
+                  <span class="info-desc">한국생산성본부</span>
+                  <span class="info-date">2017.01.13</span>
+                </div>
+
+                <div class="info-row">
+                  <strong>정보기술자격(ITQ)한글파워포인트</strong>
+                  <span class="info-desc">한국생산성본부</span>
+                  <span class="info-date">2016.12.01</span>
+                </div>
+
+                <div class="info-row">
+                  <strong>정보기술자격(ITQ) · 아래한글A</strong>
+                  <span class="info-desc">한국생산성본부</span>
+                  <span class="info-date">2016.10.27</span>
+                </div>
+
+                <div class="info-row">
+                  <strong>e – text 엑셀</strong>
+                  <span class="info-desc">한국창의인성교육연구원</span>
+                  <span class="info-date">2015.12.07</span>
+                </div>
+
+                <div class="info-row">
+                  <strong>부산섬유패션연합회 공모전</strong>
+                  <span class="info-desc">나비 패턴 디자인 입선</span>
+                  <span class="info-date">2016.11</span>
+                </div>
+
+              </div><!-- .info-block end -->
+
+
+            </div><!-- .about-info end -->
+
+          </div><!-- .about-grid end -->
+
+
+
+        </div><!-- .inner end -->
+      </section><!-- .section about-section end -->
+
+      <section class="section skills-section" id="skills">
+        <section class="inner">
+          <div class="section-heading">
+            <span class="num">
+              02 / SKILLS
+            </span><!-- .unm end -->
+            <h2>
+              MY
+              <em>TOOLKIT</em>
+            </h2>
+            <p>화살표를 클릭하면 스킬 설명 확인할 수 있습니다.</p>
+          </div><!-- .section-heading end -->
+
+          <div class="skills-grid">
+            <article class="skill-card" tabindex="0">
+              <span class="skill-no">
+                01
+              </span>
+              <div class="skills-icon">
+                <img alt="" loading="lazy" onerror="this.style.display='none'" src="img/툴/html.png">
+                <span class="skill-fallback">HT</span>
+              </div><!-- .skill-icon end -->
+              <h3>HTML</h3>
+              <p>반응형 웹페이지 생성 및 웹 기본 구조 이해 마크업 가능합니다.</p>
+              <button class="skill-plus" type="button" aria-expanded="false" aria-label="스킬 설명 펼치기">
+                &nearrow;
+              </button>
+            </article><!-- .skill-card end -->
+
+            <article class="skill-card" tabindex="0">
+              <span class="skill-no">
+                02
+              </span>
+              <div class="skills-icon">
+                <img alt="" loading="lazy" onerror="this.style.display='none'" src="img/툴/Layer 1.png">
+                <span class="skill-fallback">CS</span>
+              </div><!-- .skill-icon end -->
+              <h3>CSS</h3>
+              <p>웹 페이지의 구조 마크업 스타일링 할 수 있습니다.</p>
+              <button class="skill-plus" type="button" aria-expanded="false" aria-label="스킬 설명 펼치기">
+                &nearrow;
+              </button>
+            </article><!-- .skill-card end -->
+
+            <article class="skill-card" tabindex="0">
+              <span class="skill-no">
+                03
+              </span>
+              <div class="skills-icon">
+                <img alt="" loading="lazy" onerror="this.style.display='none'" src="img/툴/자바 1.png">
+                <span class="skill-fallback">JA</span>
+              </div><!-- .skill-icon end -->
+              <h3>JAVASCRIPT</h3>
+              <p>메뉴, 버튼, 팝업 동적인 인터랙션 구현 가능합니다. </p>
+              <button class="skill-plus" type="button" aria-expanded="false" aria-label="스킬 설명 펼치기">
+                &nearrow;
+              </button>
+            </article><!-- .skill-card end -->
+
+            <article class="skill-card" tabindex="0">
+              <span class="skill-no">
+                04
+              </span>
+              <div class="skills-icon">
+                <img alt="" loading="lazy" onerror="this.style.display='none'" src="img/툴/피그마.png">
+                <span class="skill-fallback">FI</span>
+              </div><!-- .skill-icon end -->
+              <h3>Figma</h3>
+              <p>Wep &middot; App UI 설계와 프로토타입 제작 가능합니다.</p>
+              <button class="skill-plus" type="button" aria-expanded="false" aria-label="스킬 설명 펼치기">
+                &nearrow;
+              </button>
+            </article><!-- .skill-card end -->
+
+            <article class="skill-card" tabindex="0">
+              <span class="skill-no">
+                05
+              </span>
+              <div class="skills-icon">
+                <img alt="" loading="lazy" onerror="this.style.display='none'" src="img/툴/포토샵.png">
+                <span class="skill-fallback">PH</span>
+              </div><!-- .skill-icon end -->
+              <h3>POTOSHOP</h3>
+              <p>이미지 편집, 웹 디자인, 상세페이지 제작 가능합니다.</p>
+              <button class="skill-plus" type="button" aria-expanded="false" aria-label="스킬 설명 펼치기">
+                &nearrow;
+              </button>
+            </article><!-- .skill-card end -->
+
+            <article class="skill-card" tabindex="0">
+              <span class="skill-no">
+                06
+              </span>
+              <div class="skills-icon">
+                <img alt="" loading="lazy" onerror="this.style.display='none'" src="img/툴/illust.png">
+                <span class="skill-fallback">AI</span>
+              </div><!-- .skill-icon end -->
+              <h3>ILLUSTRATOR</h3>
+              <p>그래픽 디자인 및 상세페이지 제작 가능합니다. </p>
+              <button class="skill-plus" type="button" aria-expanded="false" aria-label="스킬 설명 펼치기">
+                &nearrow;
+              </button>
+            </article><!-- .skill-card end -->
+
+            <article class="skill-card" tabindex="0">
+              <span class="skill-no">
+                07
+              </span>
+              <div class="skills-icon">
+                <img alt="" loading="lazy" onerror="this.style.display='none'" src="img/툴/파워포인트.png">
+                <span class="skill-fallback">PO</span>
+              </div><!-- .skill-icon end -->
+              <h3>POWERPOINT</h3>
+              <p>프레젠티이션 디자인 및 기본 문서 작성 가능합니다.</p>
+              <button class="skill-plus" type="button" aria-expanded="false" aria-label="스킬 설명 펼치기">
+                &nearrow;
+              </button>
+            </article><!-- .skill-card end -->
+
+
+
+
+
+          </div><!-- .skills-grid end -->
+
+        </section><!-- .inner end -->
+
+      </section><!-- .section skills-section end -->
+
+
+      <section class="section projects-section" id="projects">
+        <section class="inner">
+          <div class="section-heading">
+            <span class="num">
+              03 / PROJECTS
+            </span><!-- .unm end -->
+            <h2>
+              MY
+              <em>PROJECTS</em>
+            </h2>
+            <p>저의 프로젝트를 소개합니다.</p>
+          </div><!-- .section-heading end -->
+        </section><!-- .inner end -->
+      </section><!-- .section skills-section -->
+
+
+    </main><!-- .main end -->
+
+    <section class="section contact-section" id="contact">
+
+    </section><!-- .section contact-section-->
+
+
+
+
+
+  </div><!-- #wrap -->
+
+  <button type="button" class="scroll-toggle" aria-label="페이지 맨 아래로 이동">
+    &darr;
+  </button>
+
+</body>
+
+</html>
