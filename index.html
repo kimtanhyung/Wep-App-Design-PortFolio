@@ -146,7 +146,7 @@
         }
       );
 
-    });
+    }); // 스크롤 버튼 클릭 이벤트 종료
 
     // 스크롤 위치 확인
     $(window).on('scroll', updateScrollToggle);
@@ -256,7 +256,24 @@
 
     });
 
-  });
+
+    /* HERO 안내 문구 등장 / 사라짐 */
+    function showHoverGuide() {
+      const scrollTop = $(window).scrollTop();
+      const heroHeight = $('.hero').outerHeight();
+
+      if (scrollTop > 50 && scrollTop < 150) {
+        $('.hover-guide').addClass('is-visible');
+      } else {
+        $('.hover-guide').removeClass('is-visible');
+      }
+    }
+
+    $(window).on('scroll', showHoverGuide);
+    showHoverGuide();
+
+  }); // $(function () 종료
+</script>
 
 </script>
 
@@ -349,6 +366,11 @@
           <h2>KIM TAN
             <br /><em>HYOUNG.</em>
           </h2>
+
+          <p class="hover-guide">
+            <span class="guide-dot"></span>
+            화살표 위에 마우스를 올려보세요.
+          </p>
 
           <a class="pill-link" href="#about">
             <span class="btn-text">ABOUT</span>

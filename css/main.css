@@ -1038,56 +1038,6 @@ body:has(.header.scrolled) .hero-bg-text{
   transition: 0.3s;
 }
 
-@media (max-width: 768px) {
-  .menu-toggle {
-    display: block;
-    position: relative;
-    z-index: 1002;
-  }
-
-  .header .nav {
-    display: none;
-    position: absolute;
-    top: 78px;
-    left: 0;
-    width: 100%;
-    padding: 25px 20px;
-    background: #fff;
-    box-shadow: 0 15px 25px rgba(0,0,0,0.08);
-  }
-
-  .header .nav.is-open {
-    display: block;
-  }
-
-  .header .gnb {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
-  }
-
-  .header .gnb li + li::before {
-    display: none;
-  }
-
-  .header .gnb a {
-    padding: 14px 10px;
-    font-size: 17px;
-  }
-
-  /* 햄버거 → X */
-  .menu-toggle.is-open span:nth-child(1) {
-    transform: translateY(8px) rotate(45deg);
-  }
-
-  .menu-toggle.is-open span:nth-child(2) {
-    opacity: 0;
-  }
-
-  .menu-toggle.is-open span:nth-child(3) {
-    transform: translateY(-8px) rotate(-45deg);
-  }
-}
 
 @media (max-width: 768px) {
 
@@ -1210,7 +1160,7 @@ body:has(.header.scrolled) .hello-jump span:not(.hello-space) {
   cursor: pointer;
 }
 
-* 글자 색상 변화 준비 */
+/* 글자 색상 변화 준비 */
 .main .hero-inner .btn-text {
   transition: transform 0.3s ease,
               color 0.3s ease,
@@ -1564,4 +1514,103 @@ body:has(.header.scrolled) .hello-jump span:not(.hello-space) {
 /* 내부 두 번째 세로선 */
 .about-info .info-block .info-row .info-desc {
   border-right: 1px solid #c5afe9;
+}
+
+.skills-section,
+.projects-section {
+  min-height: 100vh;
+  padding: 120px 0;
+  box-sizing: border-box;
+}
+
+/* 제목 아래 여백 */
+.skills-section .section-heading,
+.projects-section .section-heading {
+  margin-bottom: 70px;
+}
+
+/* 모바일 */
+@media (max-width: 768px) {
+  .skills-section,
+  .projects-section {
+    min-height: 100svh;
+    padding: 80px 0;
+  }
+
+  .skills-section .section-heading,
+  .projects-section .section-heading {
+    margin-bottom: 45px;
+  }
+}
+
+/* ABOUT / SCROLL 원형 버튼 기본 상태 */
+.main .hero-inner .pill-link > span:not(.btn-text),
+.main .hero-inner a[href="#skills"] .scroll-arrow {
+  background-color: #fff;
+  border-color: #8054d8;
+  color: #8054d8;
+  transition: background-color 0.3s ease,
+              border-color 0.3s ease,
+              color 0.3s ease,
+              transform 0.3s ease;
+}
+
+/* 기본 화살표 보라색 */
+.main .hero-inner .pill-link > span:not(.btn-text)::before,
+.main .hero-inner a[href="#skills"] .scroll-arrow::before {
+  color: #8054d8;
+}
+
+/* 마우스를 올렸을 때 원형 핑크색 */
+.main .hero-inner .pill-link > span:not(.btn-text):hover,
+.main .hero-inner a[href="#skills"] .scroll-arrow:hover {
+  background-color: #FF5C8A;
+  border-color: #FF5C8A;
+  color: #fff;
+}
+
+/* 마우스를 올렸을 때 화살표 흰색 */
+.main .hero-inner .pill-link > span:not(.btn-text):hover::before,
+.main .hero-inner a[href="#skills"] .scroll-arrow:hover::before {
+  color: #fff;
+}
+
+/* HERO 화살표 안내 문구 */
+.main .hero-inner .hover-guide {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin: -25px 0 35px;
+
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: #8054d8;
+
+  opacity: 0;
+  transform: translateY(15px);
+  transition: opacity 0.7s ease,
+              transform 0.7s ease;
+}
+
+/* 스크롤 시 나타남 */
+.main .hero-inner .hover-guide.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 핑크색 작은 점 */
+.main .hero-inner .guide-dot {
+  width: 7px;
+  height: 7px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #FF5C8A;
+}
+
+/* HERO 안내 문구 크기 */
+.main .hero-inner p.hover-guide {
+  font-size: 12px;
+  line-height: 1.6;
 }
