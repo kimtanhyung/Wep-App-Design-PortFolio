@@ -1829,3 +1829,341 @@ a{
   }
 }
 
+@media screen and (max-width: 768px) {
+
+  /* 화면 가장자리와 간격 확보 */
+  .main_visual {
+    padding: 12px 16px 24px;
+  }
+
+  .main_visual .visual_Swiper {
+    overflow: hidden;
+    border-radius: 20px;
+    background-color: #eee;
+  }
+
+  /* 모바일 비주얼 높이 */
+  .main_visual .swiper-slide {
+    position: relative;
+    height: 460px;
+    overflow: hidden;
+  }
+
+  .main_visual .swiper-slide > a {
+    display: block;
+    height: 100%;
+  }
+
+  .main_visual .swiper-slide > img,
+  .main_visual .swiper-slide > a > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: right center;
+  }
+
+  /* 문구 안쪽 여백 */
+  .main_visual .text {
+    position: absolute;
+    top: 50%;
+    left: 24px;
+    right: auto;
+    width: calc(100% - 48px);
+    max-width: 230px;
+    margin: 0;
+    padding: 0;
+    transform: translateY(-50%);
+  }
+
+  .main_visual .text h2 {
+    margin-bottom: 18px;
+    font-size: 24px;
+    line-height: 1.4;
+  }
+
+  .main_visual .text p,
+  .main_visual .text span {
+    font-size: 13px;
+    line-height: 1.85;
+  }
+
+  .main_visual .text p {
+    margin-bottom: 14px;
+  }
+
+  .main_visual .lookbook_btn {
+    margin-top: 24px;
+    padding: 13px 32px 13px 20px;
+    font-size: 12px;
+  }
+
+  .main_visual .visual_Swiper > .swiper-pagination {
+    bottom: 20px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+
+  /* 첫 번째 슬라이드 문구 영역 */
+  .main_visual .swiper-slide:first-child .text {
+    left: 16px;
+    width: calc(100% - 32px);
+    max-width: 240px;
+    padding: 22px 20px;
+
+    border-radius: 16px;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #222;
+  }
+
+  .main_visual .swiper-slide:first-child .text h2 {
+    margin-bottom: 14px;
+    font-size: 22px;
+    line-height: 1.4;
+    word-break: keep-all;
+  }
+
+  .main_visual .swiper-slide:first-child .text p,
+  .main_visual .swiper-slide:first-child .text span {
+    font-size: 13px;
+    line-height: 1.75;
+  }
+
+  .main_visual .swiper-slide:first-child .lookbook_btn {
+    margin-top: 20px;
+    padding: 13px 28px 13px 16px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+}
+
+@media screen and (max-width: 768px) {
+
+  /* 첫 번째 슬라이드 높이 확보 */
+  .main_visual .visual_Swiper
+  .swiper-wrapper > .swiper-slide:first-child {
+    position: relative;
+    height: 480px;
+    min-height: 480px;
+    overflow: hidden;
+  }
+
+  .main_visual .swiper-slide:first-child > a {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .main_visual .swiper-slide:first-child > a > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: right center;
+  }
+
+  /* 가운데 배치 대신 위에서부터 여유 있게 배치 */
+  .main_visual .swiper-slide:first-child .text {
+    position: absolute;
+    top: 32px;
+    bottom: auto;
+    left: 20px;
+    right: auto;
+    transform: none;
+
+    width: calc(100% - 40px);
+    max-width: 230px;
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+    background: none;
+    color: #222;
+    z-index: 2;
+  }
+
+  .main_visual .swiper-slide:first-child .text h2 {
+    margin-bottom: 18px;
+    font-size: 22px;
+    line-height: 1.4;
+    word-break: keep-all;
+  }
+
+  .main_visual .swiper-slide:first-child .text p {
+    margin-bottom: 14px;
+  }
+
+  .main_visual .swiper-slide:first-child .text p,
+  .main_visual .swiper-slide:first-child .text span {
+    font-size: 13px;
+    line-height: 1.75;
+  }
+
+  .main_visual .swiper-slide:first-child .lookbook_btn {
+    margin-top: 22px;
+    padding: 13px 30px 13px 18px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+}
+
+@media screen and (max-width: 768px) {
+
+  /* 모든 슬라이드 높이 통일 */
+  .main_visual .visual_Swiper
+  .swiper-wrapper > .swiper-slide:nth-child(n) {
+    position: relative;
+    height: 480px;
+    min-height: 480px;
+    overflow: hidden;
+  }
+
+  .main_visual .visual_Swiper
+  .swiper-wrapper > .swiper-slide > a {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* 인물이 크게 보이도록 중앙 기준 확대 */
+  .main_visual .visual_Swiper
+  .swiper-wrapper > .swiper-slide > img,
+  .main_visual .visual_Swiper
+  .swiper-wrapper > .swiper-slide > a > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    transform: none;
+  }
+
+  /* 모든 슬라이드의 글 위치 통일 */
+  .main_visual .visual_Swiper
+  .swiper-wrapper > .swiper-slide .text {
+    position: absolute;
+    top: 32px;
+    left: 20px;
+    right: auto;
+    bottom: auto;
+    transform: none;
+
+    width: calc(100% - 40px);
+    max-width: 230px;
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+    background: none;
+    color: #222;
+    z-index: 2;
+  }
+
+  .main_visual .visual_Swiper .text h2 {
+    margin-bottom: 20px;
+    font-size: 22px;
+    line-height: 1.4;
+  }
+
+  .main_visual .visual_Swiper .text p {
+    margin-bottom: 16px;
+  }
+
+  .main_visual .visual_Swiper .text p,
+  .main_visual .visual_Swiper .text span {
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .main_visual .visual_Swiper .text .lookbook_btn {
+    margin-top: 24px;
+    padding: 13px 30px 13px 18px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .main_visual .visual_Swiper > .swiper-pagination {
+    bottom: 20px;
+    z-index: 3;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .content .list {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 16px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    cursor: grab;
+  }
+
+  .content .list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .content .item {
+    flex: 0 0 70%;
+    min-width: 0;
+  }
+
+  .content .list.dragging {
+    cursor: grabbing;
+    user-select: none;
+  }
+}
+
+/* PC에서는 안내 숨기기 */
+.content .lookbook_guide {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .content .lookbook_guide {
+    display: block;
+    margin-top: 12px;
+    font-size: 11px;
+    font-weight: 400;
+    color: #888;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .content .lookbook_guide {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+  }
+
+  .content .lookbook_guide.show {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .market .title h2 span {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin: 10px 0 0;
+
+    font-size: 11px;
+    font-weight: 400;
+    white-space: nowrap;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, 8px);
+    transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
+  }
+
+  .market .title h2 span.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+  }
+
+  .market .title {
+    margin-bottom: 50px;
+  }
+}
