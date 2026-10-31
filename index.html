@@ -36,38 +36,7 @@
         },
       });
 
-      var marketSwiper = new Swiper('.market_Swiper', {
-        direction: 'vertical',
-        simulateTouch: false,
-        slidesPerView: 1,
-        spaceBetween: 30,
 
-        scrollbar: {
-          el: '.market_Swiper .swiper-scrollbar',
-          draggable: true,
-          hide: false,
-        },
-      });
-
-      var marketSwiper = new Swiper('.market_Swiper', {
-        direction: 'vertical',
-        slidesPerView: 1,
-        spaceBetween: 0,
-        speed: 600,
-
-        // 마우스로 위아래 드래그
-        simulateTouch: true,
-
-        // 상품 영역에서는 가로 드래그만 사용
-        noSwiping: true,
-        noSwipingSelector: '.product_list',
-
-        // 세로 점 클릭으로 전환
-        pagination: {
-          el: '.market_Swiper .swiper-pagination',
-          clickable: true,
-        },
-      });
 
       $('.market .product_list').each(function () {
         var list = this;
@@ -817,7 +786,6 @@
         <div class="title">
           <h2>
             마켓스쿨
-            <span>↔ 드래그를 해보세요</span>
           </h2>
         </div><!-- .title end -->
 

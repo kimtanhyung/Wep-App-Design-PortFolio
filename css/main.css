@@ -2226,3 +2226,83 @@ a{
     text-align: center;
   }
 }
+
+@media screen and (max-width: 768px) {
+  .market .title {
+    margin-bottom: 16px;
+  }
+
+  .market .market_Swiper .market_page {
+    padding-top: 0;
+  }
+
+  .market .market_Swiper .market_page > .subtitle {
+    position: static;
+    transform: none;
+    width: 100%;
+    margin: 0 0 20px;
+    padding: 0;
+    text-align: center;
+  }
+
+
+}
+
+@media screen and (max-width: 768px) {
+  /* 마켓스쿨 바로 아래에 배치 */
+  .market .title {
+    margin-bottom: 12px;
+  }
+
+  /* 슬라이드 경계 밖으로 비치는 선 숨기기 */
+  .market .market_Swiper {
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(0);
+    border: 0;
+    box-shadow: none;
+  }
+
+  .market .market_Swiper > .swiper-scrollbar {
+    display: none;
+  }
+
+  .market .market_Swiper .market_page {
+    padding-top: 0;
+    overflow: hidden;
+  }
+
+  /* 전체 슬라이드 서브타이틀 가운데 정렬 */
+  .market .market_Swiper .market_page > .subtitle {
+    position: static;
+    transform: none;
+    width: 100%;
+    margin: 0 0 20px;
+    padding: 0;
+    line-height: 24px;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .market .market_Swiper .market_page {
+    visibility: hidden;
+  }
+
+  .market .market_Swiper .market_page.swiper-slide-active {
+    visibility: visible;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .market .market_Swiper {
+    /* 이미지 + 서브타이틀·상품명·가격 공간 확보 */
+    height: calc((100vw - 44px) / 2 + 190px);
+  }
+
+  .market .product .price {
+    flex-wrap: wrap;
+    row-gap: 4px;
+    line-height: 1.5;
+  }
+}
